@@ -1,0 +1,50 @@
+{% extends 'booktest/base.html' %}
+
+{% block post1 %}
+    {% for b in book %}
+    <article class="post post-1">
+        <header class="entry-header">
+            <h1 class="entry-title">
+                <a href="/booktest/single/{{b.id}}/">{{b.title}}</a>
+            </h1>
+            <div class="entry-meta">
+                <span class="post-category"><a href="#">{{b.title}}</a></span>
+                <span class="post-date"><a href="#"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{b.create_time}}</time></a></span>
+                <span class="post-author"><a href="#">{{b.author}}</a></span>
+                <span class="comments-link"><a href="#">4 评论</a></span>
+                <span class="views-count"><a href="#">{{b.views}} 阅读</a></span>
+            </div>
+        </header>
+        <div class="entry-content clearfix">
+            <p>{{b.summary}}</p>
+            <div class="read-more cl-effect-14">
+                <a href="/booktest/single/{{b.id}}/" class="more-link">继续阅读 <span class="meta-nav">→</span></a>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+{% endblock %}
+
+{% block category %}
+    {% for c in category %}
+        <li>
+            <a href="/booktest/category/{{c.id}}">{{c.name}}<span class="post-count">({{c.post_set.count}})</span></a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block tag %}
+    {% for t in tag %}
+        <li>
+            <a href="/booktest/tag/{{t.id}}">{{t.name}}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+
+
+
+
+
+

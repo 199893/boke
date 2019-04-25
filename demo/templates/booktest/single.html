@@ -1,0 +1,78 @@
+{% extends 'booktest/base_single.html' %}
+
+{% block post %}
+{% if book %}
+<header class="entry-header">
+    <h1 class="entry-title">
+        <a href="#">{{book}}</a>
+    </h1>
+    <div class="entry-meta">
+        <span class="post-category"><a href="#">{{book}}</a></span>
+        <span class="post-date"><a href="#"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{book.create_time}}</time></a></span>
+        <span class="post-author"><a href="#">{{book.author}}</a></span>
+        <span class="comments-link"><a href="#">4 评论</a></span>
+        <span class="views-count"><a href="#">{{book.views}} 阅读</a></span>
+    </div>
+</header>
+
+<div class="entry-content clearfix">
+    {{book.body}}
+</div>
+{% endif %}
+{% endblock %}
+
+
+
+{% block category %}
+    {% for c in category %}
+        <li>
+            <a href="/booktest/category/{{c.id}}">{{c.name}}<span class="post-count">({{c.post_set.count}})</span></a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+
+{% block tag %}
+    {% for t in tag %}
+        <li>
+            <a href="/booktest/tag/{{t.id}}">{{t.name}}</a>
+        </li>
+    {% endfor %}
+{% endblock %}
+
+{% block form %}
+<form action="{% url 'comment:commit' book.id %}" method="post" class="comment-form">
+    {% csrf_token %}
+    <div class="row">
+        <div class="col-md-4">
+            <label for="form.name.id_for_label">名字：</label>{{form.name}}
+
+        </div>
+        <div class="col-md-4">
+            <label for="form.name.id_for_label">邮箱：</label>{{form.eml}}
+        </div>
+        <div class="col-md-4">
+            <label for="form.name.id_for_label">网址：</label>{{form.url}}
+        </div>
+        <div class="col-md-12">
+            <label for="form.name.id_for_label">评论：</label>{{form.content}}
+            <button type="submit" class="comment-btn">发表</button>
+        </div>
+    </div>    <!-- row -->
+</form>
+{% endblock %}
+
+{% block content %}
+    <h3>评论列表，共 <span>{{book.comment_set.count}}</span> 条评论</h3>
+{% for c in book.comment_set.all %}
+    <ul class="comment-list list-unstyled">
+        <li class="comment-item">
+            <span class="nickname">{{c.name}}</span>
+            <time class="submit-date" datetime="2012-11-09T23:15:57+00:00">{{c.create_time}}</time>
+            <div class="text">
+                {{c.content}}
+            </div>
+        </li>
+    </ul>
+{% endfor %}
+{% endblock %}
