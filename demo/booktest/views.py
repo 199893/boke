@@ -3,13 +3,17 @@ from django.http import HttpResponse,HttpResponseRedirect
 from .models import Category,Tag,Post
 # Create your views here.
 from comment.forms import CommentForm
-from comment.models import Comment
+from django.core.paginator import Paginator
 
 def index(request):
     book=Post.objects.all()
     category=Category.objects.all()
     tag=Tag.objects.all()
-    return render(request,'booktest/index.html',{'book':book,'category':category,'tag':tag})
+    paginator=Paginator(book,2)
+    pagenum=request.GET.get('page')
+    pagenum=1 if pagenum==None else pagenum
+    page=paginator.page(pagenum)
+    return render(request,'booktest/index.html',{'book':book,'category':category,'tag':tag,'page':page})
 
 def single(request,id):
     book=Post.objects.get(pk=id)

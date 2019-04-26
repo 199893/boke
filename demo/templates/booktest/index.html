@@ -1,7 +1,7 @@
 {% extends 'booktest/base.html' %}
 
 {% block post1 %}
-    {% for b in book %}
+    {% for b in page.object_list %}
     <article class="post post-1">
         <header class="entry-header">
             <h1 class="entry-title">
@@ -10,7 +10,7 @@
             <div class="entry-meta">
                 <span class="post-category"><a href="#">{{b.category.name}}</a></span>
                 <span class="post-date"><a href="#"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{b.create_time}}</time></a></span>
-                <span class="post-author"><a href="#">{{b.author}}</a></span>
+                <span class="post-author"><a href="#">{{b.author.username}}</a></span>
                 <span class="comments-link"><a href="#">{{b.comment_set.all.count}}评论</a></span>
                 <span class="views-count"><a href="#">{{b.views}} 阅读</a></span>
             </div>
@@ -43,6 +43,41 @@
         </li>
     {% endfor %}
 {% endblock %}
+
+{% block page %}
+<div class="pagination-simple">
+    {% if page.object_list %}
+        {% if page.has_previous %}
+            <a href="?page={{page.previous_page_number}}">上一页</a>
+            <a href="?page={{page.number|add:-1}}">{{page.number|add:-1}}</a>
+        {% endif %}
+        <span class="current">第 {{page.number}} 页 / 共 {{page.paginator.num_pages}} 页</span>
+         {% if page.has_next %}
+             <a href="?page={{page.number|add:1}}">{{page.number|add:1}}</a>
+            <a href="?page={{page.next_page_number}}">下一页</a>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}
+
+
+
+
+{% comment %}
+    <div class="pagination">
+        <ul>
+            <li><a href="">1</a></li>
+            <li><a href="">...</a></li>
+            <li><a href="">4</a></li>
+            <li><a href="">5</a></li>
+            <li class="current"><a href="">6</a></li>
+            <li><a href="">7</a></li>
+            <li><a href="">8</a></li>
+            <li><a href="">...</a></li>
+            <li><a href="">11</a></li>
+        </ul>
+    </div>
+{% endcomment %}
 
 
 
