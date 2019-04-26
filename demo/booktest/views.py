@@ -1,4 +1,4 @@
-from django.shortcuts import render,reverse,redirect
+from django.shortcuts import render,reverse,redirect,get_list_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from .models import Category,Tag,Post
 # Create your views here.
@@ -33,4 +33,11 @@ def tag(request,id):
     category = Category.objects.all()
     tag = Tag.objects.all()
     return render(request,'booktest/tag.html',{'taa':taa,'category':category,'tag':tag})
+
+def archives(request,y,m):
+    postlist = get_list_or_404(Post, create_time__year = y, create_time__month = m)
+    context = {
+        "postlist":postlist,
+    }
+    return render(request,'booktest/index.html',context)
 

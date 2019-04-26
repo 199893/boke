@@ -8,10 +8,10 @@
                 <a href="/booktest/single/{{b.id}}/">{{b.title}}</a>
             </h1>
             <div class="entry-meta">
-                <span class="post-category"><a href="#">{{b.title}}</a></span>
+                <span class="post-category"><a href="#">{{b.category.name}}</a></span>
                 <span class="post-date"><a href="#"><time class="entry-date" datetime="2012-11-09T23:15:57+00:00">{{b.create_time}}</time></a></span>
                 <span class="post-author"><a href="#">{{b.author}}</a></span>
-                <span class="comments-link"><a href="#">4 评论</a></span>
+                <span class="comments-link"><a href="#">{{b.comment_set.all.count}}评论</a></span>
                 <span class="views-count"><a href="#">{{b.views}} 阅读</a></span>
             </div>
         </header>
@@ -22,6 +22,8 @@
             </div>
         </div>
     </article>
+    {% empty %}
+        没有文章信息
     {% endfor %}
 {% endblock %}
 

@@ -6,6 +6,7 @@ from booktest.models import Post
 
 def commitcomment(request,id):
     post=get_object_or_404(Post,pk=id)
+
     if request.method=='POST':
         comment=CommentForm(request.POST)
         if comment.is_valid():
